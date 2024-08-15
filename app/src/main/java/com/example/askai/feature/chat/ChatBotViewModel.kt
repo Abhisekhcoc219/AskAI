@@ -32,7 +32,6 @@ class ChatBotViewModel @Inject constructor() : ViewModel() {
     fun sendMsg(msgResponse: String) = viewModelScope.launch {
         try {
             _uiState.value.addMessage(ChatMessage(msgResponse, ROLE.USER.role))
-
             genAi.startChat().sendMessage(content(ROLE.USER.role) { text(msgResponse) })
                 .text?.let {
                     Log.e("ERRORSS", "viewModel " + it.toString())

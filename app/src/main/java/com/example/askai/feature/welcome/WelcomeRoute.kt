@@ -16,10 +16,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -44,14 +41,14 @@ fun WelcomeRoute(
         ) {
             Text(
                 text = "TalkAI",
-                color = Color.White,
+                color = MaterialTheme.colorScheme.primary,
                 fontFamily = fontFamilys,
                 fontSize = 30.sp,
                 modifier = Modifier.padding(20.dp, 40.dp, 0.dp, 0.dp)
             )
             Text(
                 text = "Best personal \n AI assistant",
-                color = Color.White,
+                color = MaterialTheme.colorScheme.primary,
                 fontFamily = fontFamilys,
                 fontSize = 30.sp,
                 modifier = Modifier
@@ -76,22 +73,16 @@ fun WelcomeRoute(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 50.dp, horizontal = 30.dp)
-                .background(
-                    color = Color.White,
-                    shape = RoundedCornerShape(16.dp)
-                )
                 .align(Alignment.CenterHorizontally),
+            shape = RoundedCornerShape(16.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Transparent,
-                contentColor = Color.White
+                containerColor = MaterialTheme.colorScheme.primary
             )
         ) {
             Text(
                 text = "Start a new chat",
-                color = Color.Black,
-                fontFamily = fontFamilys,
-                textAlign = TextAlign.Center,
-                fontWeight = FontWeight.Medium
+                color = MaterialTheme.colorScheme.onPrimary,
+                style = MaterialTheme.typography.bodyMedium,
             )
         }
     }
