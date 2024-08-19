@@ -1,5 +1,9 @@
 package com.example.askai.ui
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,18 +24,24 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.askai.feature.chat.ChatRoute
+import com.example.askai.feature.chat.ContectivityViewModel
 import com.example.askai.feature.welcome.WelcomeRoute
 import com.example.askai.ui.theme.fontFamilys
 import kotlinx.coroutines.launch
@@ -39,15 +49,22 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AiApp(
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    contectivityViewModel: ContectivityViewModel = hiltViewModel()
 ) {
 
     val scope = rememberCoroutineScope()
+    val networkConnectionState by contectivityViewModel.isConnected.observeAsState(initial = false)
 
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
 
     val currentRoute = currentBackStackEntry?.destination?.route
-
+    var text by rememberSaveable { mutableStateOf("") }
+    text = if (networkConnectionState) {
+        "Online"
+    } else {
+        "Offline"
+    }
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
@@ -62,7 +79,7 @@ fun AiApp(
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            "TalkAI",
+                            "AskAI",
                             fontFamily = fontFamilys,
                             modifier = Modifier.padding(bottom = 2.dp),
                             color = MaterialTheme.colorScheme.primary
@@ -83,7 +100,7 @@ fun AiApp(
                                     .padding(start = 4.dp)
                             )
                             Text(
-                                text = "Online",
+                                text = text,
                                 color = Color.Green,
                                 fontSize = 16.sp,
                                 modifier = Modifier.padding(end = 4.dp),
@@ -95,7 +112,6 @@ fun AiApp(
             }
         }
     ) { innerPadding ->
-
         NavHost(
             modifier = Modifier
                 .fillMaxSize()
@@ -119,7 +135,18 @@ fun AiApp(
                 ChatRoute()
             }
         }
-
     }
 
+}
+
+@SuppressLint("ServiceCast")
+@Composable
+fun isInternetAvailable(context: Context): Boolean {
+    val connectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val network = connectivityManager.activeNetwork ?: return false
+    val networkCapabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+    return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+            networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+            networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
 }

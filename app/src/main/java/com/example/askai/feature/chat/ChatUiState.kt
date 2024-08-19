@@ -9,7 +9,6 @@ class ChatUiState {
     private val _messages: MutableList<ChatMessage> = mutableStateListOf()
     val messages: List<ChatMessage> = _messages
 
-
     fun addMessage(message: ChatMessage) {
         _messages.add(message)
     }

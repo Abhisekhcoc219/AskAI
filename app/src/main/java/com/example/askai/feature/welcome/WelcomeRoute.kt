@@ -40,7 +40,7 @@ fun WelcomeRoute(
                 .weight(1f)
         ) {
             Text(
-                text = "TalkAI",
+                text = "AskAI",
                 color = MaterialTheme.colorScheme.primary,
                 fontFamily = fontFamilys,
                 fontSize = 30.sp,
@@ -88,7 +88,6 @@ fun WelcomeRoute(
     }
 
 }
-
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
 private fun PreviewWelcomeRoute() {
