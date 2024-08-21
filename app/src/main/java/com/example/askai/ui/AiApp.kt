@@ -1,9 +1,5 @@
 package com.example.askai.ui
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -137,16 +133,4 @@ fun AiApp(
         }
     }
 
-}
-
-@SuppressLint("ServiceCast")
-@Composable
-fun isInternetAvailable(context: Context): Boolean {
-    val connectivityManager =
-        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    val network = connectivityManager.activeNetwork ?: return false
-    val networkCapabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
-    return networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
-            networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
-            networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
 }
