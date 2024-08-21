@@ -3,6 +3,7 @@ package com.example.askai.feature.chat
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -140,7 +141,7 @@ private fun ChatScreen(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 10.dp),
+                    .padding(vertical = 10.dp, horizontal = 10.dp),
                 verticalAlignment = Alignment.Bottom,
                 horizontalArrangement = Arrangement.Center
             ) {
@@ -160,10 +161,8 @@ private fun ChatScreen(
                         .size(50.dp) // Adjust height as needed
                         .background(
                             color = MaterialTheme.colorScheme.surface,
-                            shape = RoundedCornerShape(
-                                7.dp
-                            )
                         )
+                        .border(2.dp, Color.Black, RoundedCornerShape(8.dp))
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.ic_send), // Replace with your image

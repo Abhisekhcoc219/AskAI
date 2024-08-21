@@ -41,7 +41,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.askai.feature.chat.ChatRoute
-import com.example.askai.feature.chat.ContectivityViewModel
+import com.example.askai.feature.chat.ConnectivityPermissionViewModel
 import com.example.askai.feature.welcome.WelcomeRoute
 import com.example.askai.ui.theme.fontFamilys
 import kotlinx.coroutines.launch
@@ -50,11 +50,11 @@ import kotlinx.coroutines.launch
 @Composable
 fun AiApp(
     navController: NavHostController = rememberNavController(),
-    contectivityViewModel: ContectivityViewModel = hiltViewModel()
+    connectivityPermissionViewModel: ConnectivityPermissionViewModel = hiltViewModel()
 ) {
 
     val scope = rememberCoroutineScope()
-    val networkConnectionState by contectivityViewModel.isConnected.observeAsState(initial = false)
+    val networkConnectionState by connectivityPermissionViewModel.isConnected.observeAsState(initial = false)
 
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
 
